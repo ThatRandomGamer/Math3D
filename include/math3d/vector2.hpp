@@ -7,16 +7,6 @@
 class Vector2
 {
 	public:
-		/** @brief calculates the dot product of vectors a and b */
-		static float dot(const Vector2& a, const Vector2& b);
-		
-		/** @brief calculates the magnitude (length) of the vector */
-		static float magnitude(const Vector2&);
-		/** @brief calculates the magnitude^2 of the vector */
-		static float magSq(const Vector2&);
-		/** @brief calculates a normalized (unit) vector */
-		static const Vector2 normalize(const Vector2&);
-
 		/**
 		 * Creates a new Vector2 with its x and y components
 		 * both 0
@@ -36,33 +26,43 @@ class Vector2
 		 */
 		Vector2(const Vector2& v2);
 
+		/** @brief calculates the dot product of this vector and v2 */
+		float dot(const Vector2& v2) const;
+
+		/** @brief calculates the magnitude (length) of the vector */
+		float magnitude() const;
+		/** @brief calculates the magnitude^2 of the vector */
+		float magSq() const;
+		/** @brief calculates a normalized (unit) vector */
+		Vector2 normalize() const;
+
 		/**
 		 * Compares whether two vectors are equal by testing whether
 		 * all of their corresponding components are equal
 		 */
-		bool operator==(const Vector2&);
-		bool operator!=(const Vector2&);
+		bool operator==(const Vector2&) const;
+		bool operator!=(const Vector2&) const;
 
 		/** @brief negates the vector */
-		const Vector2 operator-() const;
+		Vector2 operator-() const;
 
 		/** @brief adds two vectors together */
-		const Vector2 operator+(const Vector2&) const;
+		Vector2 operator+(const Vector2&) const;
 		/** @brief subtracts two vectors */
-		const Vector2 operator-(const Vector2&) const;
+		Vector2 operator-(const Vector2&) const;
 		/** @brief multiplies two vectors */
-		const Vector2 operator*(const Vector2&) const;
+		Vector2 operator*(const Vector2&) const;
 		/** @brief divides two vectors */
-		const Vector2 operator/(const Vector2&) const;
+		Vector2 operator/(const Vector2&) const;
 
 		/** @brief adds a number to the vector */
-		const Vector2 operator+(float) const;
+		Vector2 operator+(float) const;
 		/** @brief subtracts a number from a vector */
-		const Vector2 operator-(float) const;
+		Vector2 operator-(float) const;
 		/** @brief multiplies a number by a vector */
-		const Vector2 operator*(float) const;
+		Vector2 operator*(float) const;
 		/** @brief divides a vector by a number */
-		const Vector2 operator/(float) const;
+		Vector2 operator/(float) const;
 
 		/** @brief adds a vector to this vector*/
 		Vector2& operator+=(const Vector2&);
@@ -84,6 +84,7 @@ class Vector2
 
 		/** @brief indexes the components of the vector */
 		float operator[](int);
+		const float operator[](int) const;
 
 		float x, y;
 	private:

@@ -11,7 +11,12 @@ GEN_BIN=test -d bin || mkdir bin
 
 OUTPUT=bin/lib$(PROJECT).a
 
-all: $(OUTPUT)
+all: lib tester
+
+lib: $(OUTPUT)
+
+tester: Makefile-Tester
+	make -fMakefile-Tester
 
 clean:
 	test -d bin && rm -r bin
@@ -22,3 +27,5 @@ $(OUTPUT): $(OBJ)
 $(OBJ): $(SRC:%=src/%)
 	$(GEN_BIN)
 	$(CXX) -c src/$(@:%.o=%.cpp) -o bin/$@ $(CFLAGS)
+
+.PHONY: tester lib

@@ -19,105 +19,105 @@ Vector3::Vector3(const Vector3& v3)
 {
 }
 
-float Vector3::dot(const Vector3& a, const Vector3& b)
+float Vector3::dot(const Vector3& v3) const
 {
-	return a.x * b.x + a.y * b.y + a.z * b.z;
+	return x * v3.x + y * v3.y + z * v3.z;
 }
 
-const Vector3 Vector3::cross(const Vector3& a, const Vector3& b)
+Vector3 Vector3::cross(const Vector3& v3) const
 {
-	float nx = a.y * b.z - a.z * b.y;
-	float ny = a.z * b.x - a.x * b.z;
-	float nz = a.x * b.y - a.y * b.x;
+	float nx = y * v3.z - z * v3.y;
+	float ny = z * v3.x - x * v3.z;
+	float nz = x * v3.y - y * v3.x;
 
-	return Vector3(nx, nz, nz);
+	return Vector3(nx, ny, nz);
 }
 
-float Vector3::magnitude(const Vector3& v3)
+float Vector3::magnitude() const
 {
-	return sqrt(v3.x * v3.x + v3.y * v3.y + v3.z * v3.z);
+	return sqrt(x * x + y * y + z * z);
 }
 
-float Vector3::magSq(const Vector3& v3)
+float Vector3::magSq() const
 {
-	return v3.x * v3.x + v3.y * v3.y + v3.z * v3.z;
+	return x * x + y * y + z * z;
 }
 
-const Vector3 Vector3::normalize(const Vector3& v3)
+Vector3 Vector3::normalize() const
 {
-	float mag = Vector3::magnitude(v3);
+	float mag = magnitude();
 	
-	return Vector3(v3.x / mag, v3.y / mag, v3.z / mag);
+	return Vector3(x / mag, y / mag, z / mag);
 }
 
-const Vector3 Vector3::rotateBy(const Quaternion& rot) const
+Vector3 Vector3::rotateBy(const Quaternion& rot) const
 {
-	Quaternion conj = Quaternion::conjugate(rot);
+	Quaternion conj = rot.conjugate();
 	Quaternion w = rot * (*this) * conj;
 
 	return Vector3(w.x, w.y, w.z);
 }
 
-const Vector3 Vector3::rotateBy(const Vector3& axis, float angle) const
+Vector3 Vector3::rotateBy(const Vector3& axis, float angle) const
 {
 	float sinA = sin(-angle);
 	float cosA = cos(-angle);
 
-	return Vector3::cross(*this, axis * sinA + (*this) * cosA + axis
-		* Vector3::dot(*this, axis * (1 - cosA)));
+	return cross(axis * sinA + (*this) * cosA + axis
+		* dot(axis * (1 - cosA)));
 }
 
-bool Vector3::operator==(const Vector3& v3)
+bool Vector3::operator==(const Vector3& v3) const
 {
 	return x == v3.x && y == v3.y && z == v3.z;
 }
 
-bool Vector3::operator!=(const Vector3& v3)
+bool Vector3::operator!=(const Vector3& v3) const
 {
 	return x != v3.x || y != v3.y || z != v3.z;
 }
 
-const Vector3 Vector3::operator-() const
+Vector3 Vector3::operator-() const
 {
 	return Vector3(-x, -y, -z);
 }
 
-const Vector3 Vector3::operator+(const Vector3& v3) const
+Vector3 Vector3::operator+(const Vector3& v3) const
 {
 	return Vector3(x + v3.x, y + v3.y, z + v3.z);
 }
 
-const Vector3 Vector3::operator-(const Vector3& v3) const
+Vector3 Vector3::operator-(const Vector3& v3) const
 {
 	return Vector3(x - v3.x, y - v3.y, z - v3.z);
 }
 
-const Vector3 Vector3::operator*(const Vector3& v3) const
+Vector3 Vector3::operator*(const Vector3& v3) const
 {
 	return Vector3(x * v3.x, y * v3.y, z * v3.z);
 }
 
-const Vector3 Vector3::operator/(const Vector3& v3) const
+Vector3 Vector3::operator/(const Vector3& v3) const
 {
 	return Vector3(x / v3.x, y / v3.y, z / v3.z);
 }
 
-const Vector3 Vector3::operator+(float n) const
+Vector3 Vector3::operator+(float n) const
 {
 	return Vector3(x + n, y + n, z + n);
 }
 
-const Vector3 Vector3::operator-(float n) const
+Vector3 Vector3::operator-(float n) const
 {
 	return Vector3(x - n, y - n, z - n);
 }
 
-const Vector3 Vector3::operator*(float n) const
+Vector3 Vector3::operator*(float n) const
 {
 	return Vector3(x * n, y * n, z * n);
 }
 
-const Vector3 Vector3::operator/(float n) const
+Vector3 Vector3::operator/(float n) const
 {
 	return Vector3(x / n, y / n, z / n);
 }
@@ -195,6 +195,23 @@ Vector3& Vector3::operator/=(float n)
 }
 
 float Vector3::operator[](int i)
+{
+	assert(i >= 0 && i <= 2);
+
+	switch (i)
+	{
+		case 0:
+			return x;
+		case 1:
+			return y;
+		case 2:
+			return z;
+		default:
+			return 0;
+	}
+}
+
+const float Vector3::operator[](int i) const
 {
 	assert(i >= 0 && i <= 2);
 

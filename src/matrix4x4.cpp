@@ -12,43 +12,43 @@ Matrix4x4::Matrix4x4(const Matrix4x4& m4)
 	memcpy(&matrix, &(m4.matrix), 16 * sizeof(float));
 }	
 
-float Matrix4x4::determinant(const Matrix4x4& m4)
+float Matrix4x4::determinant() const
 {
-	return -m4[0][2] * m4[1][1] * m4[2][0] + m4[0][1] * m4[1][2] * m4[2][0]
-		+ m4[0][2] * m4[1][0] * m4[2][1] - m4[0][0] * m4[1][2] * m4[2][1]
-		- m4[0][1] * m4[1][0] * m4[2][2] + m4[0][0] * m4[1][1]* m4[2][2];
+	return -matrix[0][2] * matrix[1][1] * matrix[2][0] + matrix[0][1] * matrix[1][2] * matrix[2][0]
+		+ matrix[0][2] * matrix[1][0] * matrix[2][1] - matrix[0][0] * matrix[1][2] * matrix[2][1]
+		- matrix[0][1] * matrix[1][0] * matrix[2][2] + matrix[0][0] * matrix[1][1]* matrix[2][2];
 }
 
-const Matrix4x4 Matrix4x4::inverse(const Matrix4x4& m4)
+Matrix4x4 Matrix4x4::inverse() const
 {
-	float det = Matrix4x4::determinant(m4);
+	float det = determinant();
 	float k = 1.0f / det;
 
 	Matrix4x4 out;
 
-	out[0][0] = (m4[1][1] * m4[2][2] - m4[2][1] * m4[1][2]) * k;
-	out[0][1] = (m4[2][1] * m4[0][2] - m4[0][1] * m4[2][2]) * k;
-	out[0][2] = (m4[0][1] * m4[1][2] - m4[1][1] * m4[0][2]) * k;
-	out[1][0] = (m4[1][2] * m4[2][0] - m4[2][2] * m4[1][0]) * k;
-	out[1][1] = (m4[2][2] * m4[0][0] - m4[0][2] * m4[2][0]) * k;
-	out[1][2] = (m4[0][2] * m4[1][0] - m4[1][2] * m4[0][0]) * k;
-	out[2][0] = (m4[1][0] * m4[2][1] - m4[2][0] * m4[1][1]) * k;
-	out[2][1] = (m4[2][0] * m4[0][1] - m4[0][0] * m4[2][1]) * k;
-	out[2][2] = (m4[0][0] * m4[1][1] - m4[1][0] * m4[0][1]) * k;
+	out[0][0] = (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) * k;
+	out[0][1] = (matrix[2][1] * matrix[0][2] - matrix[0][1] * matrix[2][2]) * k;
+	out[0][2] = (matrix[0][1] * matrix[1][2] - matrix[1][1] * matrix[0][2]) * k;
+	out[1][0] = (matrix[1][2] * matrix[2][0] - matrix[2][2] * matrix[1][0]) * k;
+	out[1][1] = (matrix[2][2] * matrix[0][0] - matrix[0][2] * matrix[2][0]) * k;
+	out[1][2] = (matrix[0][2] * matrix[1][0] - matrix[1][2] * matrix[0][0]) * k;
+	out[2][0] = (matrix[1][0] * matrix[2][1] - matrix[2][0] * matrix[1][1]) * k;
+	out[2][1] = (matrix[2][0] * matrix[0][1] - matrix[0][0] * matrix[2][1]) * k;
+	out[2][2] = (matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]) * k;
 
-	out[0][3] = -(out[0][0] * m4[0][3] + out[0][1] * m4[1][3] + out[0][2] * m4[2][3]);
-	out[1][3] = -(out[1][0] * m4[0][3] + out[1][1] * m4[1][3] + out[1][2] * m4[2][3]);
-	out[2][3] = -(out[2][0] * m4[0][3] + out[2][1] * m4[1][3] + out[2][2] * m4[2][3]);
+	out[0][3] = -(out[0][0] * matrix[0][3] + out[0][1] * matrix[1][3] + out[0][2] * matrix[2][3]);
+	out[1][3] = -(out[1][0] * matrix[0][3] + out[1][1] * matrix[1][3] + out[1][2] * matrix[2][3]);
+	out[2][3] = -(out[2][0] * matrix[0][3] + out[2][1] * matrix[1][3] + out[2][2] * matrix[2][3]);
 
-	out[3][0] = m4[3][0];
-	out[3][1] = m4[3][1];
-	out[3][2] = m4[3][2];
-	out[3][3] = m4[3][3];
+	out[3][0] = matrix[3][0];
+	out[3][1] = matrix[3][1];
+	out[3][2] = matrix[3][2];
+	out[3][3] = matrix[3][3];
 
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::transpose(const Matrix4x4& m4)
+Matrix4x4 Matrix4x4::transpose() const
 {
 	Matrix4x4 out;
 
@@ -56,14 +56,14 @@ const Matrix4x4 Matrix4x4::transpose(const Matrix4x4& m4)
 	{
 		for (int x = 0; x < 4; x++)
 		{
-			out[y][x] = m4[x][y];
+			out[y][x] = matrix[x][y];
 		}
 	}
 
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::identity()
+Matrix4x4 Matrix4x4::identity()
 {
 	Matrix4x4 out;
 
@@ -75,7 +75,7 @@ const Matrix4x4 Matrix4x4::identity()
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::position(float x, float y, float z)
+Matrix4x4 Matrix4x4::position(float x, float y, float z)
 {
 	Matrix4x4 out;
 
@@ -87,7 +87,7 @@ const Matrix4x4 Matrix4x4::position(float x, float y, float z)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::position(const Vector3& pos)
+Matrix4x4 Matrix4x4::position(const Vector3& pos)
 {
 	Matrix4x4 out;
 
@@ -99,7 +99,7 @@ const Matrix4x4 Matrix4x4::position(const Vector3& pos)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::scale(float x, float y, float z)
+Matrix4x4 Matrix4x4::scale(float x, float y, float z)
 {
 	Matrix4x4 out;
 
@@ -111,7 +111,7 @@ const Matrix4x4 Matrix4x4::scale(float x, float y, float z)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::scale(const Vector3& scale)
+Matrix4x4 Matrix4x4::scale(const Vector3& scale)
 {
 	Matrix4x4 out;
 
@@ -123,7 +123,7 @@ const Matrix4x4 Matrix4x4::scale(const Vector3& scale)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::rotation(float x, float y, float z)
+Matrix4x4 Matrix4x4::rotation(float x, float y, float z)
 {
 	Matrix4x4 rx, ry, rz;
 
@@ -160,7 +160,7 @@ const Matrix4x4 Matrix4x4::rotation(float x, float y, float z)
 	return rz * (ry * rx);
 }
 
-const Matrix4x4 Matrix4x4::rotation(const Vector3& rot)
+Matrix4x4 Matrix4x4::rotation(const Vector3& rot)
 {
 	float x = rot.x;
 	float y = rot.y;
@@ -201,7 +201,7 @@ const Matrix4x4 Matrix4x4::rotation(const Vector3& rot)
 	return rz * (ry * rx);
 }
 
-const Matrix4x4 Matrix4x4::rotation(float x, float y, float z, float w)
+Matrix4x4 Matrix4x4::rotation(float x, float y, float z, float w)
 {
 	Matrix4x4 out;
 
@@ -222,7 +222,7 @@ const Matrix4x4 Matrix4x4::rotation(float x, float y, float z, float w)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::rotation(const Quaternion& rot)
+Matrix4x4 Matrix4x4::rotation(const Quaternion& rot)
 {
 	Matrix4x4 out;
 
@@ -243,7 +243,7 @@ const Matrix4x4 Matrix4x4::rotation(const Quaternion& rot)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::fromAxisAngle(float x, float y, float z, float angle)
+Matrix4x4 Matrix4x4::fromAxisAngle(float x, float y, float z, float angle)
 {
 	Matrix4x4 out;
 
@@ -268,7 +268,7 @@ const Matrix4x4 Matrix4x4::fromAxisAngle(float x, float y, float z, float angle)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis, float angle)
+Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis, float angle)
 {
 	Matrix4x4 out;
 
@@ -293,12 +293,12 @@ const Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis, float angle)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis)
+Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis)
 {
 	Matrix4x4 out;
 
-	float angle = Vector3::magnitude(axis);
-	Vector3 uAxis = Vector3::normalize(axis);
+	float angle = axis.magnitude();
+	Vector3 uAxis = axis.normalize();
 
 	float sinA = sin(angle);
 	float cosA = cos(angle);
@@ -321,10 +321,10 @@ const Matrix4x4 Matrix4x4::fromAxisAngle(const Vector3& axis)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up)
+Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up)
 {
 	Matrix4x4 out;
-	Vector3 right = Vector3::cross(up, forward);
+	Vector3 right = up.cross(forward);
 
 	out[0][0] = right.x;
 	out[0][1] = right.y;
@@ -343,7 +343,7 @@ const Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up)
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up,
+Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up,
 	const Vector3& right)
 {
 	Matrix4x4 out;
@@ -365,7 +365,7 @@ const Matrix4x4 Matrix4x4::fromAxes(const Vector3& forward, const Vector3& up,
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::perspective(float fov, float aspectRatio, float zNear, float zFar)
+Matrix4x4 Matrix4x4::perspective(float fov, float aspectRatio, float zNear, float zFar)
 {
 	Matrix4x4 out;
 
@@ -383,7 +383,7 @@ const Matrix4x4 Matrix4x4::perspective(float fov, float aspectRatio, float zNear
 	return out;
 }
 
-const Matrix4x4 Matrix4x4::operator*(const Matrix4x4& m4) const
+Matrix4x4 Matrix4x4::operator*(const Matrix4x4& m4) const
 {
 	Matrix4x4 out;
 
@@ -401,7 +401,7 @@ const Matrix4x4 Matrix4x4::operator*(const Matrix4x4& m4) const
 	return out;
 }
 
-const Vector3 Matrix4x4::operator*(const Vector3& v3) const
+Vector3 Matrix4x4::operator*(const Vector3& v3) const
 {
 	float nx = matrix[0][0] * v3.x + matrix[0][1] * v3.y + matrix[0][2] * v3.z + matrix[0][3];
 	float ny = matrix[1][0] * v3.x + matrix[1][1] * v3.y + matrix[1][2] * v3.z + matrix[1][3];
@@ -415,7 +415,7 @@ float* Matrix4x4::operator[](int y)
 	return matrix[y];
 }
 
-float* Matrix4x4::operator[](int y) const
+const float* Matrix4x4::operator[](int y) const
 {
-	return const_cast<float*>(matrix[y]);
+	return matrix[y];
 }

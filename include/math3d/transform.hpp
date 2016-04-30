@@ -31,7 +31,7 @@ class Transform
 		 * Creates a transformation matrix using the transform's
 		 * position, rotation, and scale
 		 */
-		const Matrix4x4 getTransformation();
+		Matrix4x4 getTransformation();
 
 		/**
 		 * translates the transform by the given (x, y, z)

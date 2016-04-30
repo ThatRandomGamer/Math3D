@@ -1,6 +1,6 @@
 #include "transform.hpp"
 
-static const Quaternion getLookAtRotation(const Vector3&, const Vector3&, const Vector3&);
+static Quaternion getLookAtRotation(const Vector3&, const Vector3&, const Vector3&);
 
 Transform::Transform()
 : position(Vector3()), rotation(Quaternion(0, 0, 0, 1)), scale(Vector3(1, 1, 1))
@@ -12,7 +12,7 @@ Transform::Transform(const Vector3& position, const Quaternion& rotation, const 
 {
 }
 
-const Matrix4x4 Transform::getTransformation()
+Matrix4x4 Transform::getTransformation()
 {
 	return Matrix4x4::position(position)
 		* Matrix4x4::rotation(rotation) * Matrix4x4::scale(scale);
@@ -53,7 +53,7 @@ Transform& Transform::lookAt(const Vector3& point)
 	return *this;
 }
 
-static const Quaternion getLookAtRotation(const Vector3& a, const Vector3& b, const Vector3& up)
+static Quaternion getLookAtRotation(const Vector3& a, const Vector3& b, const Vector3& up)
 {
-	return Quaternion::fromMatrix(Matrix4x4::fromAxes(Vector3::normalize(b - a), up));
+	return Quaternion::fromMatrix(Matrix4x4::fromAxes((b - a).normalize(), up));
 }

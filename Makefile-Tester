@@ -1,0 +1,21 @@
+PROJECT=Math3DTester
+
+CXX=g++
+CFLAGS=-std=c++11 -Iinclude
+LFLAGS=-static -Lbin -lmath3d
+
+OBJ=main.o
+SRC=$(OBJ:%.o=%.cpp)
+
+GEN_BIN=test -d bin || mkdir bin
+
+OUTPUT=bin/$(PROJECT).exe
+
+all: $(OUTPUT)
+
+$(OUTPUT): $(OBJ)
+	$(CXX) $(OBJ:%=bin/%) -o $(OUTPUT) $(LFLAGS)
+
+$(OBJ): $(SRC)
+	$(GEN_BIN)
+	$(CXX) -c $(@:%.o=%.cpp) -o bin/$@ $(CFLAGS)

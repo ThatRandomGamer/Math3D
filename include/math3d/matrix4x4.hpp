@@ -11,18 +11,11 @@
 class Matrix4x4
 {
 	public:
-		/** @brief calculates the determinant of the given matrix */
-		static float determinant(const Matrix4x4& m4);
-		/** @brief calculates the inverse of the given matrix */
-		static const Matrix4x4 inverse(const Matrix4x4& m4);
-		/** @brief calculates the transpose of the given matrix */
-		static const Matrix4x4 transpose(const Matrix4x4& m4);
-
 		/**
 		 * Creates a new Matrix4x4 object and initializes so that it
 		 * contains the 4x4 identity matrix
 		 */
-		static const Matrix4x4 identity();
+		static Matrix4x4 identity();
 		
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -32,14 +25,14 @@ class Matrix4x4
 		 * @param y the y component of the position
 		 * @param z the z component of the position
 		 */
-		static const Matrix4x4 position(float x, float y, float z);
+		static Matrix4x4 position(float x, float y, float z);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * an (x, y, z) position
 		 *
 		 * @param pos the vector containing the position
 		 */
-		static const Matrix4x4 position(const Vector3& pos);
+		static Matrix4x4 position(const Vector3& pos);
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -49,14 +42,14 @@ class Matrix4x4
 		 * @param y the y component of the scale
 		 * @param z the z component of the scale
 		 */
-		static const Matrix4x4 scale(float x, float y, float z);
+		static Matrix4x4 scale(float x, float y, float z);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * an (x, y, z) scale
 		 *
 		 * @param scale the vector containing the scale
 		 */
-		static const Matrix4x4 scale(const Vector3& scale);
+		static Matrix4x4 scale(const Vector3& scale);
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -66,14 +59,14 @@ class Matrix4x4
 		 * @param y the y axis rotation
 		 * @param z the z axis rotation
 		 */
-		static const Matrix4x4 rotation(float x, float y, float z);
+		static Matrix4x4 rotation(float x, float y, float z);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * a rotation consisting of (x, y, z) euler angles
 		 *
 		 * @param rot the rotations for the x, y, and z axes
 		 */
-		static const Matrix4x4 rotation(const Vector3& rot);
+		static Matrix4x4 rotation(const Vector3& rot);
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -84,14 +77,14 @@ class Matrix4x4
 		 * @param z the z component of the rotation
 		 * @param w the w component of the rotation
 		 */
-		static const Matrix4x4 rotation(float x, float y, float z, float w);
+		static Matrix4x4 rotation(float x, float y, float z, float w);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * a quaternion (x, y, z, w) rotation
 		 *
 		 * @param rot the rotation quaternion
 		 */
-		static const Matrix4x4 rotation(const Quaternion& rot);	
+		static Matrix4x4 rotation(const Quaternion& rot);	
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -104,7 +97,7 @@ class Matrix4x4
 		 * @param z the z component of the axis
 		 * @param angle the angle of rotation
 		 */
-		static const Matrix4x4 fromAxisAngle(float x, float y, float z, float angle);
+		static Matrix4x4 fromAxisAngle(float x, float y, float z, float angle);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * a rotation from an (x, y, z) vector axis and an angle
@@ -114,7 +107,7 @@ class Matrix4x4
 		 * @param axis the axis of rotation
 		 * @param angle the angle of rotation
 		 */
-		static const Matrix4x4 fromAxisAngle(const Vector3& axis, float angle);
+		static Matrix4x4 fromAxisAngle(const Vector3& axis, float angle);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * a rotation from a vector by using its magnitude for the angle of
@@ -124,7 +117,7 @@ class Matrix4x4
 		 *
 		 * @param axis the vector containing the axis and the angle of rotation
 		 */
-		static const Matrix4x4 fromAxisAngle(const Vector3& axis);
+		static Matrix4x4 fromAxisAngle(const Vector3& axis);
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
@@ -134,7 +127,7 @@ class Matrix4x4
 		 * @param forward the forward direction vector
 		 * @param up the up direction vector
 		 */
-		static const Matrix4x4 fromAxes(const Vector3& forward, const Vector3& up);
+		static Matrix4x4 fromAxes(const Vector3& forward, const Vector3& up);
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with
 		 * a rotation created from a normalized (unit) forward vector,
@@ -144,7 +137,7 @@ class Matrix4x4
 		 * @param up the up direction vector
 		 * @param right the right direction vector
 		 */
-		static const Matrix4x4 fromAxes(const Vector3& forward, const Vector3& up, const Vector3& right);
+		static Matrix4x4 fromAxes(const Vector3& forward, const Vector3& up, const Vector3& right);
 
 		/**
 		 * Creates a new Matrix4x4 object and initializes it with a
@@ -156,7 +149,7 @@ class Matrix4x4
 		 * @param zNear the near value for the projection
 		 * @param zFar the far value for the projection
 		 */
-		static const Matrix4x4 perspective(float fov, float aspectRatio, float zNear, float zFar);
+		static Matrix4x4 perspective(float fov, float aspectRatio, float zNear, float zFar);
 
 		/**
 		 * Creates a new Matrix4x4 and initializes all of its
@@ -169,15 +162,22 @@ class Matrix4x4
 		 */
 		Matrix4x4(const Matrix4x4&);
 
+		/** @brief calculates the determinant of the given matrix */
+		float determinant() const;
+		/** @brief calculates the inverse of the given matrix */
+		Matrix4x4 inverse() const;
+		/** @brief calculates the transpose of the given matrix */
+		Matrix4x4 transpose() const;
+
 		/** @brief multiplies two matrices together using matrix multiplication */
-		const Matrix4x4 operator*(const Matrix4x4&) const;
+		Matrix4x4 operator*(const Matrix4x4&) const;
 
 		/** @brief transforms a vector by the matrix using matrix multiplication */
-		const Vector3 operator*(const Vector3&) const;
+		Vector3 operator*(const Vector3&) const;
 
 		/** @brief indexes the components of the matrix in [column][row] or [y][x] format */
 		float* operator[](int);
-		float* operator[](int) const;
+		const float* operator[](int) const;
 
 		float matrix[4][4];
 	private:
