@@ -283,8 +283,6 @@ Vector3 Quaternion::down() const
 
 float Quaternion::operator[](int i)
 {
-	assert(i >= 0 && i <= 3);
-
 	switch (i)
 	{
 		case 0:
@@ -302,8 +300,6 @@ float Quaternion::operator[](int i)
 
 const float Quaternion::operator[](int i) const
 {
-	assert(i >= 0 && i <= 3);
-
 	switch (i)
 	{
 		case 0:

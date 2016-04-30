@@ -160,8 +160,6 @@ Vector2& Vector2::operator/=(float n)
 
 float Vector2::operator[](int i)
 {
-	assert(i >= 0 && i <= 1);
-
 	switch (i)
 	{
 		case 0:
@@ -175,8 +173,6 @@ float Vector2::operator[](int i)
 
 const float Vector2::operator[](int i) const
 {
-	assert(i >= 0 && i <= 1);
-
 	switch (i)
 	{
 		case 0:

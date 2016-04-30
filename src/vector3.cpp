@@ -196,8 +196,6 @@ Vector3& Vector3::operator/=(float n)
 
 float Vector3::operator[](int i)
 {
-	assert(i >= 0 && i <= 2);
-
 	switch (i)
 	{
 		case 0:
@@ -213,8 +211,6 @@ float Vector3::operator[](int i)
 
 const float Vector3::operator[](int i) const
 {
-	assert(i >= 0 && i <= 2);
-
 	switch (i)
 	{
 		case 0:

@@ -18,6 +18,7 @@ int main()
 
 	print(v2);
 	std::cout << v2.magnitude() << std::endl;
+	std::cout << v2.dot(Vector2(0, 1)) << std::endl;
 
 	std::cin.get();
 	return 0;
