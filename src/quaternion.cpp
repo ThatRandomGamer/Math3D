@@ -1,5 +1,4 @@
 #include "quaternion.hpp"
-#include <cassert>
 #include <cmath>
 
 #define EPSILON	1e3f

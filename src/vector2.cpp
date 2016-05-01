@@ -1,5 +1,4 @@
 #include "vector2.hpp"
-#include <cassert>
 #include <cmath>
 
 Vector2::Vector2()
